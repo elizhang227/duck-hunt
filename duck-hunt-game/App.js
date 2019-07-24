@@ -37,7 +37,7 @@ var InitialVRScene = require('./js/HelloWorldScene');
 var UNSET = "UNSET";
 var VR_NAVIGATOR_TYPE = "VR";
 var AR_NAVIGATOR_TYPE = "AR";
-var SCORES_NAVIGATOR_TYPE= "SCORES";
+var SCORES_NAVIGATOR_TYPE = "SCORES";
 
 // This determines which type of experience to launch in, or UNSET, if the user should
 // be presented with a choice of AR or VR. By default, we offer the user a choice.
@@ -110,17 +110,12 @@ export default class ViroSample extends Component {
   // Returns the ViroARSceneNavigator which will start the AR experience
   _getARNavigator() {
     return (
-      <ViroText
-      text="Hello World"
-      textAlign="left"
-      textAlignVertical="top"
-      textLineBreakMode="justify"
-      textClipMode="clipToBounds"
-      color="#ff0000"
-      width={2} height={2}
-      style={{fontFamily:"Arial", fontStyle:"italic", color:"#0000FF"}}
-      position={[0,0,-5]}
-      />   
+      <View style={localStyles.outer} >
+        <Text style={localStyles.titleText}>
+          Bot
+          </Text>
+      </View>
+
       // <ViroARSceneNavigator {...this.state.sharedProps}
       //   initialScene={{ scene: InitialARScene }} />
     );
@@ -128,7 +123,7 @@ export default class ViroSample extends Component {
 
   // Returns the ViroSceneNavigator which will start the VR experience
   _getVRNavigator() {
-    return (   
+    return (
       <ViroVRSceneNavigator {...this.state.sharedProps}
         initialScene={{ scene: InitialVRScene }} onExitViro={this._exitViro} />
     );
