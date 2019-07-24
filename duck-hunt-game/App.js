@@ -15,6 +15,8 @@ import {
   StyleSheet,
   PixelRatio,
   TouchableHighlight,
+  FlatList,
+  Row
 } from 'react-native';
 
 import {
@@ -22,6 +24,8 @@ import {
   ViroARSceneNavigator,
   ViroText
 } from 'react-viro';
+
+import ScoresList from './components/scoresList';
 
 /*
  TODO: Insert your API key below
@@ -43,19 +47,38 @@ var SCORES_NAVIGATOR_TYPE = "SCORES";
 // be presented with a choice of AR or VR. By default, we offer the user a choice.
 var defaultNavigatorType = UNSET;
 
+const test = [0,1,3,5,3,6,6,343,53,63];
+
+loadData = async () => {
+  const url = `http://localhost:3000/v1/all`;
+  const response = await fetch(url);
+  const data = response.json();
+  console.log('data', data)
+  return data;
+}
+
 export default class ViroSample extends Component {
   constructor() {
     super();
 
     this.state = {
       navigatorType: defaultNavigatorType,
-      sharedProps: sharedProps
+      sharedProps: sharedProps,
+      scores: []
     }
     this._getExperienceSelector = this._getExperienceSelector.bind(this);
     this._getARNavigator = this._getARNavigator.bind(this);
     this._getVRNavigator = this._getVRNavigator.bind(this);
     this._getExperienceButtonOnPress = this._getExperienceButtonOnPress.bind(this);
     this._exitViro = this._exitViro.bind(this);
+  }
+
+  async componentDidMount() {
+    const scores = await loadData();
+    console.log('component did mount', scores)
+    this.setState({
+      scores: scores
+    })
   }
 
   // Replace this function with the contents of _getVRNavigator() or _getARNavigator()
@@ -109,15 +132,21 @@ export default class ViroSample extends Component {
 
   // Returns the ViroARSceneNavigator which will start the AR experience
   _getARNavigator() {
+    const { scores } = this.state;
+    console.log('this is scores', scores);
     return (
       <View style={localStyles.outer} >
-        <Text style={localStyles.titleText}>
-          Bot
-          </Text>
+        <Text style={localStyles.titleText}>High Scores</Text>
+        <FlatList 
+          data={test}
+          renderItem={({ item, index }) => {
+            return (
+              <Text style={localStyles.titleText}>{item}</Text>
+            )
+          }}
+          keyExtractor={(item, index) => `${index}`}
+        />
       </View>
-
-      // <ViroARSceneNavigator {...this.state.sharedProps}
-      //   initialScene={{ scene: InitialARScene }} />
     );
   }
 
@@ -128,12 +157,6 @@ export default class ViroSample extends Component {
         initialScene={{ scene: InitialVRScene }} onExitViro={this._exitViro} />
     );
   }
-
-  // _getScoresNavigator() {
-  //   return (
-  //     <Viro
-  //   )
-  // }
 
   // This function returns an anonymous/lambda function to be used
   // by the experience selector buttons
