@@ -39,9 +39,10 @@ export default class HelloWorldSceneAR extends Component {
   render() {
 
     return (
-      <ViroARScene onTrackingUpdated={this._onInitialized} >
-        <ViroText text={this.state.text} scale={[.5, .5, .5]} position={[this.state.position, 0, -1]} style={styles.helloWorldTextStyle} />
-      </ViroARScene>
+        <ViroText text='TESTING'/>
+      // <ViroARScene onTrackingUpdated={this._onInitialized} >
+      //   <ViroText text={this.state.text} scale={[.5, .5, .5]} position={[this.state.position, 0, -1]} style={styles.helloWorldTextStyle} />
+      // </ViroARScene>
     );
   }
 
