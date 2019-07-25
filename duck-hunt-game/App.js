@@ -138,10 +138,13 @@ export default class ViroSample extends Component {
       <View style={localStyles.outer} >
         <Text style={localStyles.titleText}>High Scores</Text>
         <FlatList 
-          data={test}
+          data={scores}
           renderItem={({ item, index }) => {
             return (
-              <Text style={localStyles.titleText}>{item}</Text>
+              <>
+              <Text style={localStyles.titleText}>{item.username}</Text>
+              <Text style={localStyles.titleText}>{item.score}</Text>
+              </>
             )
           }}
           keyExtractor={(item, index) => `${index}`}
